@@ -1,23 +1,39 @@
 #include "shell.h"
+/**
+ * main - entry point
+ * Return: 0
+ */
 
 int main(void)
 {
-	char *input = NULL; /*Guarda lo que dijo el usuario*/
+	char *input = NULL;
 	size_t len = 0;
 	ssize_t read;
+	char **args;
 
-	while (1) /* Bucle infinito */
+	while (1)
 	{
-		printf("#cisfun$ "); /*Mostramos el prompt*/
-		read = getline(&input, &len, stdin); /*Leemos lo que nos dijo el usuario en el prompt*/
+		printf("#cisfun$ ");
+		read = getline(&input, &len, stdin);
 
-		if (read == -1) /*Ctrl+D o EOF*/
+		if (read == -1)
 		{
 			printf("\n");
 			break;
 		}
+
+		args = tokenize_input(input);
+
+		if (!args || !args[0])
+		{
+			free(args);
+			continue;
+		}
+
+		execute_command(args);
+		free(args);
 	}
 
-	free(input); /* Liberamos memoria */
+	free(input);
 	return (0);
 }
