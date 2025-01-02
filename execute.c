@@ -36,7 +36,7 @@ void execute_external_command(char **args)
 		command_path = find_command_in_path(args[0]);
 		if (!command_path)
 		{
-			perror("Command not found");
+			perror("./hsh");
 			return;
 		}
 	}
