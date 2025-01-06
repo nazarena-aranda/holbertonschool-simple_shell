@@ -38,7 +38,7 @@ void execute_external_command(char **args)
 		if (!command_path)
 		{
 			perror("./hsh");
-			return(127);
+			return;
 		}
 	}
 
