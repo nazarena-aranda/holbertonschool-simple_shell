@@ -33,7 +33,7 @@ int main(void)
 			continue;
 		}
 
-		execute_command(args);
+		execute_command(args, input);
 		free(args);
 	}
 
