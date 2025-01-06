@@ -1,4 +1,26 @@
 #include "shell.h"
+
+/**
+ * get_env_variable - Busca una variable de entorno
+ * @name: Nombre de la variable de entorno
+ * Return: Valor de la variable o NULL si no se encuentra
+ */
+extern char **environ;
+char *get_env_variable(const char *name)
+{
+	int i;
+	size_t len = strlen(name);
+
+	for (i = 0; environ[i]; i++)
+	{
+	if (strncmp(environ[i], name, len) == 0 && environ[i][len] == '=')
+	{
+		return environ[i] + len + 1;
+	}
+	}
+	return NULL;
+}
+
 /**
  * find_command_in_path - Searches for a command in the PATH
  * @command: Command to search for
@@ -6,7 +28,7 @@
  */
 char *find_command_in_path(char *command)
 {
-	char *path = getenv("PATH");
+	char *path = get_env_variable("PATH");
 	char *path_copy, *token, *full_path;
 	size_t command_len, dir_len;
 
