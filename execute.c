@@ -6,21 +6,28 @@
  * Return: 0
  */
 
-void execute_command(char **args, char *input)
+void execute_command(char *command, char **args) 
 {
-        if (strcmp(args[0], "exit") == 0)
-        {
-                handle_exit(args, input);
-        }
-        else if (strcmp(args[0], "env") == 0)
-        {
-                handle_env();
-        }
-        else
-        {
-                execute_external_command(args);
-        }
+	if (access(command, X_OK) != 0) 
+	{
+	if (errno == ENOENT)
+	{
+		fprintf(stderr, "%s: not found\n", command);
+		exit(127);
+        } 
+	else 
+	{
+		perror(command);
+		exit(1);
+	}
+	}
+
+	execvp(command, args);
+
+	perror(command);
+	exit(1);
 }
+
 
 /**
  * execute_external_command - Executes non-built-in commands
