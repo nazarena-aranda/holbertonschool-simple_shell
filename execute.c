@@ -5,20 +5,21 @@
  * @args: Array of arguments for the command
  * Return: 0
  */
+
 void execute_command(char **args, char *input)
 {
-	if (strcmp(args[0], "exit") == 0)
-	{
-		handle_exit(args, input);
-	}
-	else if (strcmp(args[0], "env") == 0)
-	{
-		handle_env();
-	}
-	else
-	{
-		execute_external_command(args);
-	}
+        if (strcmp(args[0], "exit") == 0)
+        {
+                handle_exit(args, input);
+        }
+        else if (strcmp(args[0], "env") == 0)
+        {
+                handle_env();
+        }
+        else
+        {
+                execute_external_command(args);
+        }
 }
 
 /**
