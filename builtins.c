@@ -2,14 +2,16 @@
 /**
  * handle_exit - Exits the shell
  * @args: Array of arguments
+ * @input: Buffer
  * Return: 0
  */
-void handle_exit(char **args)
+void handle_exit(char **args, char *input)
 {
-	int status = 0;
-
-	free(args);
-	exit(status);
+	if (args)
+		free(args);
+	if (input)
+		free(input);
+	exit(0);
 }
 
 /**

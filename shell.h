@@ -11,9 +11,9 @@
 extern char **environ;
 
 char **tokenize_input(char *input);
-void execute_command(char **args);
 char *find_command_in_path(char *command);
-void handle_exit(char **args);
+void execute_command(char **args, char *input);
+void handle_exit(char **args, char *input);
 void handle_env(void);
 void execute_external_command(char **args);
 
