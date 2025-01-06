@@ -38,7 +38,7 @@ void execute_external_command(char **args)
 		if (!command_path)
 		{
 			perror("./hsh");
-			return;
+			return(127);
 		}
 	}
 
@@ -47,14 +47,13 @@ void execute_external_command(char **args)
 	{
 		if (execve(command_path, args, environ) == -1)
 		{
-			perror("Error");
-			exit(1);
+			perror("./hsh");
+			exit(127);
 		}
 	}
 	else if (pid > 0)
 	{
-		wait(NULL);
-	}
+		wait(NULL);	}
 	else
 	{
 		perror("Fork error");
