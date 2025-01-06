@@ -11,19 +11,22 @@ int main(void)
 	ssize_t read;
 	char **args;
 
+	int is_interactive = isatty(STDIN_FILENO);
+
 	while (1)
 	{
-		printf("#cisfun$ ");
-		read = getline(&input, &len, stdin);
+		if (is_interactive)
+			printf("#cisfun$ ");
 
+		read = getline(&input, &len, stdin);
 		if (read == -1)
 		{
-			printf("\n");
+			if (is_interactive)
+				printf("\n");
 			break;
 		}
 
 		args = tokenize_input(input);
-
 		if (!args || !args[0])
 		{
 			free(args);
