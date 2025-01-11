@@ -37,7 +37,7 @@ void execute_external_command(char **args)
 		command_path = find_command_in_path(args[0]);
 		if (!command_path)
 		{
-			fprintf(stderr, "%s: Command not found\n", args[0]);
+			fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
 			exit(127);
 		}
 	}
@@ -53,16 +53,7 @@ void execute_external_command(char **args)
 	}
 	else if (pid > 0)
 	{
-		int status;
-		wait(&status);
-		if (WIFEXITED(status))
-		{
-			int exit_code = WEXITSTATUS(status);
-			if (exit_code != 0)
-			{
-				fprintf(stderr, "Command exited with code: %d\n", exit_code);
-			}
-		}
+		wait(NULL);
 	}
 	else
 	{
