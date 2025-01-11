@@ -8,18 +8,18 @@
 
 void execute_command(char **args, char *input)
 {
-        if (strcmp(args[0], "exit") == 0)
-        {
-                handle_exit(args, input);
-        }
-        else if (strcmp(args[0], "env") == 0)
-        {
-                handle_env();
-        }
-        else
-        {
-                execute_external_command(args);
-        }
+	if (strcmp(args[0], "exit") == 0)
+	{
+		handle_exit(args, input);
+	}
+	else if (strcmp(args[0], "env") == 0)
+	{
+		handle_env();
+	}
+	else
+	{
+		execute_external_command(args);
+	}
 }
 
 /**
@@ -37,8 +37,8 @@ void execute_external_command(char **args)
 		command_path = find_command_in_path(args[0]);
 		if (!command_path)
 		{
-			perror("./hsh");
-			return;
+			fprintf(stderr, "%s: Command not found\n", args[0]);
+			exit(127);
 		}
 	}
 
@@ -47,13 +47,23 @@ void execute_external_command(char **args)
 	{
 		if (execve(command_path, args, environ) == -1)
 		{
-			perror("./hsh");
+			perror(command_path);
 			exit(127);
 		}
 	}
 	else if (pid > 0)
 	{
-		wait(NULL);	}
+		int status;
+		wait(&status);
+		if (WIFEXITED(status))
+		{
+			int exit_code = WEXITSTATUS(status);
+			if (exit_code != 0)
+			{
+				fprintf(stderr, "Command exited with code: %d\n", exit_code);
+			}
+		}
+	}
 	else
 	{
 		perror("Fork error");
@@ -62,4 +72,3 @@ void execute_external_command(char **args)
 	if (command_path != args[0])
 		free(command_path);
 }
-
