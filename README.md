@@ -45,13 +45,7 @@ This project implements a basic command interpreter (shell) in UNIX that allows 
 
 The following flow describes how the shell operates:
 
-1. Display the `#cisfun$` prompt (interactive mode).
-2. Read user input with `getline`.
-3. Split the input into tokens.
-4. Search for the command in the `PATH` or verify if it is an internal command.
-5. Execute the command (internal or external).
-6. Handle errors if the command is invalid.
-7. Repeat until the user enters `exit`.
+![Flowchart](https://github.com/nazarena-aranda/Images/blob/main/Flowchart.png?raw=true)
 
 ## Files
 
